@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.google.mapper.LibMapper">
+
+<sql id="criteria">
+<trim prefix="AND (" suffix=")" prefixOverrides = "OR">
+	<foreach item="type" collection="typeArr">
+		<trim prefix="OR">
+			<choose>
+				<when test="type=='N'.toString()">
+					name LIKE concat('%',#{keyword},'%')
+				</when>
+				<when test="type=='C'.toString()">
+					city LIKE concat('%',#{keyword},'%')
+				</when>
+			</choose>
+		</trim>
+	</foreach>
+</trim>
+</sql>
+
+<select id="getList" resultType="com.google.domain.LibVO">
+<![CDATA[
+SELECT * FROM tbl_all_lib WHERE no > 0 ORDER BY no ASC
+]]>
+</select>
+
+<select id="getListWithPaging" resultType="com.google.domain.LibVO">
+SELECT * 
+FROM tbl_all_lib 
+<![CDATA[
+WHERE no > 0 
+]]>  
+<include refid="criteria"></include>
+ORDER BY no ASC
+LIMIT #{skip}, #{amount}
+</select>
+
+<select id="getListTotal" resultType="int">
+<![CDATA[
+SELECT count(*) FROM tbl_all_lib 
+WHERE no > 0
+]]>
+<include refid="criteria"></include>
+</select>
+
+<insert id="insert">
+INSERT INTO tbl_all_lib (name,city,fullCity)
+VALUES (#{name}, #{city}, #{fullCity})
+</insert>
+
+<insert id="insertLastId">
+<selectKey keyProperty="no" order="AFTER" resultType="int">
+SELECT last_insert_id()
+</selectKey>
+INSERT INTO tbl_all_lib (name,city,fullCity)
+VALUES (#{name}, #{city}, #{fullCity})
+</insert>
+
+<select id="read" resultType="com.google.domain.LibVO">
+SELECT * FROM tbl_all_lib WHERE no = #{no}
+</select>
+
+<delete id="delete">
+DELETE FROM tbl_all_lib WHERE no = #{no}
+</delete>
+
+<update id="update">
+UPDATE tbl_all_lib SET name=#{name}, city=#{city} 
+WHERE no = #{no}
+</update>
+
+<update id="updateHit">
+UPDATE tbl_all_lib SET hit=hit+1 
+WHERE no = #{no}
+</update>
+
+<update id="updateReplyCnt">
+UPDATE tbl_all_lib SET replyCnt = replyCnt + #{amount} 
+WHERE no = #{no}
+</update>
+
+</mapper>
