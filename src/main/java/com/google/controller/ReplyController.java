@@ -26,10 +26,9 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @AllArgsConstructor
 public class ReplyController {
-
+ 
 	private ReplyService service;
 	/**
-	 * http://localhost/admin/replies/new
 	 * 댓글등록
 	 * @param vo
 	 * @return
@@ -37,7 +36,6 @@ public class ReplyController {
 	@PreAuthorize("isAuthenticated()")	
 	@PostMapping(value="/new", consumes="application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
-	
 	public ResponseEntity<String> create(@RequestBody ReplyVO vo){
 		int insertCount = service.insert(vo);
 		
@@ -50,22 +48,13 @@ public class ReplyController {
 	 * @param bno
 	 * @return
 	 */
-	@GetMapping(value="/pages/{no}/{table}/{page}")
+	@GetMapping(value="/pages/{bno}/{table}/{page}")
 	public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page") int page, @PathVariable("table") String tableID,
-										@PathVariable("no") Long bno){
-		log.info(tableID);
+										@PathVariable("bno") Long bno){
+		//log.info(tableID);
 		Criteria cri = new Criteria(page,10);
 		return new ResponseEntity<ReplyPageDTO>(service.getListWithPaging(cri, bno, tableID), HttpStatus.OK);
 	}
-	
-	/*
-	 * @GetMapping(value="/pages/{bno}/{page}") public ResponseEntity<ReplyPageDTO>
-	 * getList2(@PathVariable("page") int page,
-	 * 
-	 * @PathVariable("bno") Long bno){ Criteria cri = new Criteria(page,10); return
-	 * new ResponseEntity<ReplyPageDTO>(service.getListWithPaging(cri, bno),
-	 * HttpStatus.OK); }
-	 */
 	
 	@GetMapping(value="/{rno}")
 	public ResponseEntity<ReplyVO> get(@PathVariable("rno") Long rno){

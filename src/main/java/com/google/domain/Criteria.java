@@ -22,10 +22,10 @@ public class Criteria {
 		this(1,10);
 		/*
 		 * this.pageNum = 1; this.amount = 10;
+		 * ${pageMaker.cri.amount }=10
 		 */
-	
-
 	}
+	
 	public Criteria(int pageNum, int amount) {
 		super();
 		this.pageNum = pageNum;
@@ -44,7 +44,7 @@ public class Criteria {
 
 	/**
 	 * 삭제 시 현재 페이지 및 검색어 유지
-	 * http://localhost/admin/board/list?pageNum=7&amount=10&type=&keyword=
+	 * http://localhost/board/list?pageNum=7&amount=10&type=&keyword=
 	 * @return
 	 */
 	public String getListLink() {
@@ -57,4 +57,5 @@ public class Criteria {
 		return builer.toUriString();
 		
 	}
+	
 }

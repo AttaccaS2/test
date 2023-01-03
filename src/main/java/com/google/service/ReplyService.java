@@ -1,5 +1,7 @@
 package com.google.service;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.google.domain.Criteria;
@@ -11,6 +13,8 @@ public interface ReplyService {
 	public int insert(ReplyVO vo);
 	
 	public ReplyVO read(Long rno); 
+	
+	public ArrayList<ReplyVO> readById(String replyer);
 	
 	public int delete(Long rno);
 	

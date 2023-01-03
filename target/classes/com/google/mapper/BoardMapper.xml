@@ -85,4 +85,9 @@ UPDATE tbl_board SET replyCnt = replyCnt + #{amount}
 WHERE bno = #{bno}
 </update>
 
+<update id="updateAttachCnt">
+UPDATE tbl_board SET attachCnt = attachCnt + #{amount} 
+WHERE bno = #{bno}
+</update>
+
 </mapper>

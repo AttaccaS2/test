@@ -11,7 +11,6 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/sample/*")
 public class SampleController {
 
-
 	//로그인 안해도 접근 가능
 	@GetMapping("/all")
 	public void doAll() {

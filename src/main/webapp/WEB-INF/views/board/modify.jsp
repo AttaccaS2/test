@@ -169,7 +169,7 @@ function showUploadFile(uploadResultArr){
 		}
 		
 		$.ajax({
-			url:"/admin/uploadAjaxAction",
+			url:"/uploadAjaxAction",
 			processData:false,
 			contentType:false,
 			data:formData,

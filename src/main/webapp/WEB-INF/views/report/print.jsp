@@ -9,7 +9,7 @@
 <head>
 <title></title>
 <meta http_quiv="content-type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="/admin/resources/assets/css/report_style.css">
+<link rel="stylesheet" type="text/css" href="/resources/assets/css/report_style.css">
 </head>
 <body>
 	<div class="hpa" style="width: 210.03mm; height: 297.02mm;">

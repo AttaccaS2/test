@@ -10,9 +10,9 @@ public interface LibService {
 
 	public void register(LibVO vo);//insert
 	
-	public LibVO get(int no);//read	
+	public LibVO get(int bno);//read	
 	
-	public boolean remove(int no); //delete
+	public boolean remove(int bno); //delete
 	
 	public void modify(LibVO vo); //update
 	
@@ -21,4 +21,6 @@ public interface LibService {
 	public int getListTotal(Criteria cri);
 	
 	public List<BoardAttachVO> getAttachList(long bno);//첨부파일목록	
+	
+	//public int countReply();
 }

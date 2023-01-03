@@ -6,93 +6,93 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>    
     
 <%@ include file="../includes/header.jsp" %>    
-
+    
 <div class="wrap">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="widget">
 					<header class="widget-header">
-						<h4 class="widget-title">전국 도서관 목록</h4>
+						<h4 class="widget-title">공지사항</h4>
 					</header><!-- .widget-header -->
 					<hr class="widget-separator">
 					<div class="widget-body">
 						<form method="post" class="form-horizontal" action="">
 						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}">
 				
-						<input type="hidden" name="no" value="${board.no }"/>
+						<input type="hidden" name="bno" value="${board.bno }"/>
 						<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }"/>
 						<input type="hidden" name="amount" value="${pageMaker.cri.amount}"/>
 						<input type="hidden" name="type" value="${pageMaker.cri.type }"/>
 						<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }"/>
-						<input type="hidden" name="city" value="${board.city}"/>
-						<input type="hidden" name="name" value="${board.name}"/>
-					 
+						<input type="hidden" name="writer" value="${board.writer }"/>
+					
 							<div class="form-group">
-								<label for="exampleTextInput1" class="col-sm-3 control-label">도서관명:</label>
+								<label for="exampleTextInput1" class="col-sm-3 control-label">제목:</label>
 								<div class="col-sm-9">
-						<c:out value="${board.name }"></c:out>	
+						<c:out value="${board.title }"></c:out>	
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="textarea1" class="col-sm-3 control-label">내용:</label>
+								<div class="col-sm-9">
+						<% pageContext.setAttribute("newLineChar", "\n"); %>		
+						${fn:replace(board.content, newLineChar,'<br/>')}				
 								</div>
 							</div>
 							
 							<div class="form-group">
-								<label for="exampleTextInput1" class="col-sm-3 control-label">시:</label>
+								<label for="exampleTextInput1" class="col-sm-3 control-label">글쓴이:</label>
 								<div class="col-sm-9">
-						<c:out value="${board.city }"></c:out>	
+						<c:out value="${board.writer }"></c:out>	
 								</div>
 							</div>
 							
 							<div class="form-group">
-								<label for="exampleTextInput1" class="col-sm-3 control-label">군/구:</label>
+								<label for="exampleTextInput1" class="col-sm-3 control-label">등록날짜:</label>
 								<div class="col-sm-9">
-						<c:out value="${board.fullCity }"></c:out>	
+						<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${board.regdate }"/>					
 								</div>
 							</div>							
-										
-							<div class="form-group">
-								<label for="exampleTextInput1" class="col-sm-3 control-label">장서 수:</label>
-								<div class="col-sm-9">
-						<c:out value="${board.books }"></c:out>	
-								</div>
-							</div>	
-							
-							<div class="form-group">
-								<label for="exampleTextInput1" class="col-sm-3 control-label">사서 수:</label>
-								<div class="col-sm-9">
-						<c:out value="${board.man }"></c:out>	
-								</div>
-							</div>	
-							
+
 							<div class="row">
 								<div class="col-sm-9 col-sm-offset-3">
 							<sec:authentication property="principal" var="pinfo"/>
 							<sec:authorize access="isAuthenticated()">
-									<a href="modify${pageMaker.cri.listLink }&no=${board.no }" class="btn btn-success btn-sm">Modify Button</a>
-									<button type="button" id="btn_remove" class="btn btn-success btn-sm">Remove Button</button>
+								<c:if test="${pinfo.username eq  board.writer}">
+									<a href="modify${pageMaker.cri.listLink }&bno=${board.bno }" class="btn btn-success btn-sm">수정</a>
+									<button type="button" id="btn_remove" class="btn btn-success btn-sm">삭제</button>
+								</c:if>
 							</sec:authorize>
 									
-									<a href="javascript:history.go(-1)" class="btn btn-success btn-sm">List Button</a>
+									<a href="javascript:history.go(-1)" class="btn btn-success btn-sm">목록</a>
 								</div>
 							</div>
 							
 						</form>
-					</div>			
-						<div class="mail-item">	
-							<div style="height:38px;padding-top:6px;">Files</div>
-							<div class="uploadResult">
-								<ul style="display:flex">
-								</ul>
-							</div>
-						</div>	
+					</div>
+					
+			<div class="mail-item">	
+				<div style="height:38px;padding-top:6px;">파일</div>
+				<div class="uploadResult">
+					<ul style="display:flex">
+	
+					</ul>
+				</div>
+			</div>	
+					<!-- .widget-body -->
+				
 				</div><!-- .widget -->
 				
-						<div class="mail-item">	
-							<div style="display:inline-block;height:38px;padding-top:6px;">Reply</div>
-							<div style="display:inline-block;float:right;">
-							<sec:authorize access="isAuthenticated()">
-							<Button data-toggle="modal" data-target="#composeModal" class="btn btn-default btn-sm" onclick="btn_new();">New Reply</Button>			
-							</sec:authorize>
-							</div>
-						</div>	
+			<div class="mail-item">	
+				<div style="display:inline-block;height:38px;padding-top:6px;">댓글</div>
+				<div style="display:inline-block;float:right;">
+
+				<sec:authorize access="isAuthenticated()">
+				<Button data-toggle="modal" data-target="#composeModal" class="btn btn-default btn-sm" onclick="btn_new();">댓글 등록</Button>			
+				</sec:authorize>
+				</div>
+			</div>	
 			
 			<!-- a single mail -->
 			<div id="chat">				
@@ -118,7 +118,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">New Reply</h4>
+				<h4 class="modal-title">댓글</h4>
 			</div>
 			<div class="modal-body">
 				<form action="#" onsubmit="return false;"> <!-- 엔터 쳐도 작동(submit) 안하게 해야한다 -->
@@ -131,9 +131,9 @@
 				</form>
 			</div>
 			<div class="modal-footer">
-					<button type="button" id="btn_modify" data-dismiss="" class="btn btn-primary">Modify<i class="fa fa-send"></i></button>
-					<button type="button" id="btn_del" data-dismiss="" class="btn btn-primary">Remove<i class="fa fa-send"></i></button>		
-					<button type="button" id="btn_reply" data-dismiss="" class="btn btn-primary">Send<i class="fa fa-send"></i></button>
+					<button type="button" id="btn_modify" data-dismiss="" class="btn btn-primary">수정<i class="fa fa-send"></i></button>
+					<button type="button" id="btn_del" data-dismiss="" class="btn btn-primary">삭제<i class="fa fa-send"></i></button>		
+					<button type="button" id="btn_reply" data-dismiss="" class="btn btn-primary">전송<i class="fa fa-send"></i></button>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
@@ -169,10 +169,15 @@ function btn_modal(t){
 
 	//footer 부분을 초기화 시키고 버튼 2개 보여줘
 	$(".modal-footer").empty();
+	
+	var user = null;
+    user = '<sec:authentication property="principal.username"/>';	
+	if(user==replyer){
 	let btn_footer = "";
-	btn_footer +='<button type="button" id="btn_modify" data-dismiss="" class="btn btn-primary">Modify <i class="fa fa-send"></i></button>';
-	btn_footer +='<button type="button" id="btn_del" data-dismiss="" class="btn btn-primary">Remove<i class="fa fa-send"></i></button>';
+	btn_footer +='<button type="button" id="btn_modify" data-dismiss="" class="btn btn-primary">수정<i class="fa fa-send"></i></button>';
+	btn_footer +='<button type="button" id="btn_del" data-dismiss="" class="btn btn-primary">삭제<i class="fa fa-send"></i></button>';
 	$(".modal-footer").html(btn_footer); //innerHTML() 같은거
+	}
 }
 
 var pageNum=1;
@@ -228,7 +233,7 @@ function getList(){
 	// ajax 통신으로 댓글 목록 읽어오라
     $.ajax({
 		type : "GET",         
-		url : "/replies/pages/${board.no }/${board.TABLE_ID }/"+pageNum+".json",                
+		url : "/replies/pages/${board.bno }/${board.TABLE_ID }/"+pageNum+".json",                 
 		success : function(res){
 			let html= "";
 			console.log(res.list); //Array(댓글 갯수) 나옴
@@ -265,7 +270,6 @@ function getList(){
 	
 }
 $(document).ready(function(){
-	
 	getList();
 	$("#btn_remove").on("click",function(){		
 		if(confirm("정말 삭제?")){
@@ -296,6 +300,7 @@ $(document).ready(function(){
 		        },
 		        error : function(XMLHttpRequest, textStatus, errorThrown){ 
 		        	console.log("통신 실패.");
+		        	//alert("본인 댓글만 삭제 및 수정 가능")
 		        }
 		    });
 			
@@ -305,7 +310,7 @@ $(document).ready(function(){
 	//댓글 수정
 	$(document).on("click", "#btn_modify", function(){
 		let rno = $('#rno').val();
-		let bno = '${board.no }';
+		let bno = '${board.bno }';
 		let reply = $("#reply").val();
 		let replyer = $("#replyer").val();
 		
@@ -342,13 +347,15 @@ $(document).ready(function(){
 	});
 	//댓글 작성
 	$(document).on("click", "#btn_reply", function(){		
-		let bno = '${board.no }';
+		let bno = '${board.bno }';
 		let reply = $("#reply").val();
 		let replyer = $("#replyer").val();
+		let tableID= '${board.TABLE_ID }';
 		
 		let data={bno:bno,
 	        	reply:reply,
-	        	replyer:replyer};
+	        	replyer:replyer,
+	        	tableID:tableID};
 		
 		if(reply == ''){
 			alert("댓글내용을 작성해주세요");
@@ -384,13 +391,14 @@ $(document).ready(function(){
 		e.preventDefault();
 	//	console.log("btn"+$(this).attr("href"));//btn2 이렇게 자기 자신 숫자가 찍힘
 		pageNum = $(this).attr("href");
-		getList(); //겟리스트의 아작스 url이 "/replies/pages/${board.no }/"+pageNum+".json"라서 목록을 보여줄수있다.      
+		getList(); //겟리스트의 아작스 url이 "/replies/pages/${board.bno }/"+pageNum+".json"라서 목록을 보여줄수있다.      
 	});
 	
 });
 
-	var bno = '${board.no }';
+	var bno = '${board.bno }';
 	$.getJSON("./getAttachList", {bno:bno}, function(arr){
+		console.log(arr.length);
 		console.log(arr);
 		
 		let str="";
@@ -419,6 +427,10 @@ $(document).ready(function(){
 				str+='</li>';
 			}//그림파일 아닐때
 		});
+		
+		if(arr.length==0){
+			str+='<span>등록된 파일이 없습니다.</span>';
+		}
 		
 		$(".uploadResult ul").html(str); //.text()는 글자만 덧붙임
 		//이걸 해줘야 str이 화면에 보임 <a><img></a> 라서 이미지 클릭하면 링크

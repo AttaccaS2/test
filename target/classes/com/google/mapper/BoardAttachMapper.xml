@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.google.mapper.BoardAttachMapper">
 
 <insert id="insert">
-INSERT INTO tbl_attach (uuid, uploadPath, fileName, fileType, bno )
-VALUES(#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{bno});
+INSERT INTO tbl_attach (uuid, uploadPath, fileName, fileType, bno, tableId)
+VALUES(#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{bno}, #{tableID});
 </insert>
 
 <delete id="delete">
@@ -19,7 +19,7 @@ SELECT * FROM tbl_attach WHERE bno=#{bno}
 </select>
 
 <delete id="deleteAll">
-DELETE FROM tbl_attach WHERE  bno=#{bno}
+DELETE FROM tbl_attach WHERE bno=#{bno} AND tableID=#{tableID};
 </delete>
 
 <select id="getOldFiles" resultType="com.google.domain.BoardAttachVO">

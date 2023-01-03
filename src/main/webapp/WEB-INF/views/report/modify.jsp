@@ -8,11 +8,12 @@
 		<div class="col-md-12">
 			<div class="widget"> 
 					<header class="widget-header">
-						<h4 class="widget-title">Report Modify</h4>
+						<h4 class="widget-title">업무보고서 수정</h4>
 					</header><!-- .widget-header -->
 					<hr class="widget-separator">
 					<div class="widget-body">
 						<form method="post" class="form-horizontal" action="">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}">
 						<input type="hidden" name="bno" value="${report.bno }"/>
 
 							<div class="form-group">

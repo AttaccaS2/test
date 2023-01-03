@@ -20,6 +20,6 @@
 <p>사용자 권한 리스트: <security:authentication property="principal.member.authList"/></p>
 
 
-<a href="/admin/customLogout">로그아웃</a>
+<a href="/customLogout">로그아웃</a>
 </body>
 </html>

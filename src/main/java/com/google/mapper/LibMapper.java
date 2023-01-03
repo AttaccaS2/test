@@ -15,19 +15,21 @@ public interface LibMapper {
 
 	public int getListTotal(Criteria cri);
 
-	public void insert(LibVO vo);
+	public void insert(LibVO vo); 
 	
 	public long insertLastId(LibVO vo);
 	
-	public LibVO read(int no);
+	public LibVO read(int bno);
 	
-	public void updateHit(int no);
+	public void updateHit(int bno);
 	
-	public int delete(int no);
+	public int delete(int bno);
 	
 	public void update(LibVO vo);
 	
-	public void updateReplyCnt(@Param("no") int no,
+	public void updateReplyCnt(@Param("bno") int bno,
 			@Param("amount") int amount);
+
+	public void updateAttachCnt(@Param("bno") int bno, @Param("amount") int amount);
 
 }

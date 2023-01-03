@@ -12,11 +12,11 @@
 <body>
 <h1>/sample/all</h1>
 <sec:authorize access="isAnonymous()">
-<a href="/admin/customLogin">로그인</a>
+<a href="/customLogin">로그인</a>
 </sec:authorize>
 
 <sec:authorize access="isAuthenticated()">
-<a href="/admin/customLogout">로그아웃</a>
+<a href="/customLogout">로그아웃</a>
 </sec:authorize>
 
 </body>

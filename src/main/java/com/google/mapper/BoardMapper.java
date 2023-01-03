@@ -31,4 +31,6 @@ public interface BoardMapper {
 	public void updateReplyCnt(@Param("bno") long bno,
 			@Param("amount") int amount);
 
+	public void updateAttachCnt(@Param("bno") long bno,
+			@Param("amount") int amount);
 }

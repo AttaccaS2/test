@@ -33,6 +33,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Controller
 @Log4j
 public class UploadController {
+	
 	@GetMapping("/uploadForm")
 	public void uploadForm() {
 		log.info("upload form");
@@ -42,22 +43,21 @@ public class UploadController {
 	public void uploadFormPost(MultipartFile[] uploadFile, Model model) {
 		String uploadFolder = "D:/upload";
 		for(MultipartFile multipartFile : uploadFile) {
-			log.info("upload file name: " + multipartFile.getOriginalFilename());
-			log.info("upload file size: " + multipartFile.getSize());
-			log.info("upload file tagname: " + multipartFile.getName());
-			log.info("upload file isEmpty: " + multipartFile.isEmpty());
-			//log.info("upload file getBytes: " + multipartFile.getBytes());
-			log.info("upload file transferTo(File file): ");
-			
+			/*
+			 * log.info("upload file name: " + multipartFile.getOriginalFilename());
+			 * log.info("upload file size: " + multipartFile.getSize());
+			 * log.info("upload file tagname: " + multipartFile.getName());
+			 * log.info("upload file isEmpty: " + multipartFile.isEmpty());
+			 * log.info("upload file getBytes: " + multipartFile.getBytes());
+			 * log.info("upload file transferTo(File file): ");
+			 */
 			//파일저장
 			File savefile = new File(uploadFolder, multipartFile.getOriginalFilename());
 			try {
 				multipartFile.transferTo(savefile);
 			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -72,21 +72,17 @@ public class UploadController {
 		File uploadPath = new File(uploadFolder, CommonUtil.getFolder());
 		
 		if(uploadPath.exists() == false) {
-			uploadPath.mkdirs(); //메이크 디렉토리
-			
+			uploadPath.mkdirs(); //메이크 디렉토리		
 		}
 		
 		String uploadFileName = null;
 		
 		List<AttachFileDTO> list = new ArrayList<AttachFileDTO>();
-				
-		
+					
 		for(MultipartFile multipartFile : uploadFile) {
 			
 			AttachFileDTO attachDTO = new AttachFileDTO();
 			
-			//파일 저장
-			//File savefile = new File(uploadFolder, multipartFile.getOriginalFilename());
 			//폴더에 파일 저장
 			//File savefile = new File(uploadPath, multipartFile.getOriginalFilename());
 			
@@ -98,7 +94,6 @@ public class UploadController {
 			attachDTO.setUuid(uuid.toString());
 			attachDTO.setUploadPath(CommonUtil.getFolder());
 			
-
 			try {
 				multipartFile.transferTo(savefile); //파일저장
 				//썸네일 만들기
@@ -180,12 +175,9 @@ public class UploadController {
 				file.delete();				//썸네일 지움
 			}
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new ResponseEntity<String>("deleted", HttpStatus.OK);
-		
-		
+		return new ResponseEntity<String>("deleted", HttpStatus.OK);	
 	}
 }
 

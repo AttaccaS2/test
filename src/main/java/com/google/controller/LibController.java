@@ -30,7 +30,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @Log4j
 @AllArgsConstructor
-@RequestMapping("/board/*")
+@RequestMapping("/lib/*")
 public class LibController {
 
 	private LibService service;
@@ -52,16 +52,15 @@ public class LibController {
 	@PostMapping("/register")
 	public String register(LibVO board, RedirectAttributes rttr) {
 		service.register(board);
-		// board/list로 이동하면서 result값(글번호)을 전달
-		rttr.addFlashAttribute("result", board.getNo());
-		return "redirect:/board/list";
+		//System.out.println(board);
+		rttr.addFlashAttribute("result", board.getBno()); 	// lib/list로 이동하면서 result값(글번호)을 전달 
+		return "redirect:/lib/list";
 	}
 	
 	@GetMapping({"/get","/modify"})
-	public void get(@RequestParam("no") int no, Model model, Criteria cri) {
-		model.addAttribute("board", service.get(no));
-		model.addAttribute("pageMaker", new PageDTO(cri));
-		
+	public void get(@RequestParam("bno") int bno, Model model, Criteria cri) {
+		model.addAttribute("board", service.get(bno));
+		model.addAttribute("pageMaker", new PageDTO(cri));	
 	}
 	
 	@GetMapping(value="/getAttachList", produces = MediaType.APPLICATION_PROBLEM_JSON_UTF8_VALUE)
@@ -79,26 +78,27 @@ public class LibController {
 	  * @param writer
 	  * @return
 	  */
-	//@PreAuthorize("principal.username == #board.writer")
+	@PreAuthorize("principal.username == #board.writer")
 	@PostMapping("/remove")
 	//삭제후 원하는 페이지
-	public String remove(LibVO board, @RequestParam("no") int no, Criteria cri, RedirectAttributes rttr, String writer ) {
-		List<BoardAttachVO> attachList = service.getAttachList(no);
-		if(service.remove(no)) {
+	public String remove(LibVO board, @RequestParam("bno") int bno, Criteria cri, RedirectAttributes rttr, String writer ) {
+		List<BoardAttachVO> attachList = service.getAttachList(bno);
+		if(service.remove(bno)) {
+			//System.out.println("remove");
 			deleteFiles(attachList);
-			rttr.addFlashAttribute("result", "success");
-			
+			rttr.addFlashAttribute("result", "success");		
 		}
-		return "redirect:/board/list"+cri.getListLink();
+		return "redirect:/lib/list"+cri.getListLink();
 	}
 	
-	//@PreAuthorize("principal.username == #board.writer")
+	@PreAuthorize("principal.username == #board.writer")
 	@PostMapping("/modify")
 	public String modify(LibVO board, RedirectAttributes rttr) {
 		service.modify(board);
+		
 		// board/list로 이동하면서 result값(글번호)을 전달
-		rttr.addFlashAttribute("result", board.getNo());
-		return "redirect:/board/list";
+		rttr.addFlashAttribute("result", board.getBno());
+		return "redirect:/lib/list";
 	}
 	
 	/**
@@ -127,7 +127,6 @@ public class LibController {
 					Files.delete(thumNail);
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		});

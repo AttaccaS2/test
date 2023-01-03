@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>    
 <%@ include file="../includes/header.jsp"%>
 
 <div class="wrap">
@@ -8,12 +8,13 @@
 		<div class="col-md-12">
 			<div class="widget">
 				<header class="widget-header">
-					<h4 class="widget-title">Report Register</h4>
+					<h4 class="widget-title">업무보고서 등록</h4>
 				</header>
 				<!-- .widget-header -->
 				<hr class="widget-separator">
 				<div class="widget-body">
 					<form method="post" class="form-horizontal" action="">
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}">
 						<div class="form-group">
 							<label for="textarea1" class="col-sm-3 control-label">업무내용:</label>
 							<div class="col-sm-9">
@@ -38,8 +39,8 @@
 						<div class="form-group">
 							<label for="exampleTextInput1" class="col-sm-3 control-label">작성자:</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control input-sm" name="writer" id="writer"
-									placeholder="Writer" required="required">
+								<input type="text" class="form-control input-sm" name="writer" id="writer" readonly="readonly"
+									value="<sec:authentication property="principal.username"/>" placeholder="Writer" >
 							</div>
 						</div>
 						

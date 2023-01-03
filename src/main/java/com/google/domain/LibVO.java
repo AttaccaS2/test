@@ -8,7 +8,7 @@ import lombok.Data;
 public class LibVO {
 	private final String TABLE_ID="board";
 
-	private int no;
+	private int bno;
 	private String name;
 	private String city;
 	private String fullCity;
@@ -16,11 +16,12 @@ public class LibVO {
 	private int man;
 	private int visitPeople;
 	private int money;
+	private String writer;
 	
 	private int hit;
 
 	private int replyCnt;
-	
+	private int attachCnt;
 	
 	private List<BoardAttachVO> attachList;
 }

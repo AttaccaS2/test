@@ -27,7 +27,7 @@ public class ReplyMapperTests {
 		log.info("replyMapper.......");
 	}
 
-	//@Test
+	@Test
 	public void testInsert() {
 		ReplyVO vo = new ReplyVO();
 		vo.setBno(3L);

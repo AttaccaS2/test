@@ -4,26 +4,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.google.mapper.NewsMapper">
 
-<sql id="criteria">
-<trim prefix="AND (" suffix=")" prefixOverrides = "OR">
-	<foreach item="type" collection="typeArr">
-		<trim prefix="OR">
-			<choose>
-				<when test="type=='T'.toString()">
-					title LIKE concat('%',#{keyword},'%')
-				</when>
-				<when test="type=='C'.toString()">
-					content LIKE concat('%',#{keyword},'%')
-				</when>
-				<when test="type=='W'.toString()">
-					writer LIKE concat('%',#{keyword},'%')
-				</when>
-			</choose>
-		</trim>
-	</foreach>
-</trim>
-</sql>
-
 <select id="getList" resultType="com.google.domain.NewsVO">
 <![CDATA[
 SELECT * FROM tbl_news WHERE bno > 0 ORDER BY bno DESC
@@ -31,20 +11,15 @@ SELECT * FROM tbl_news WHERE bno > 0 ORDER BY bno DESC
 </select>
 
 <select id="getListWithPaging" resultType="com.google.domain.NewsVO">
-SELECT * 
-FROM tbl_news 
 <![CDATA[
-WHERE bno > 0
-]]>  
-<include refid="criteria"></include>
-ORDER BY bno DESC
+SELECT * FROM tbl_news 
+WHERE bno > 0 ORDER BY bno DESC
 LIMIT #{skip}, #{amount}
+]]>
 </select>
-
 
 <select id="getListTotal" resultType="int">
 SELECT count(*) FROM tbl_news 
-<include refid="criteria"></include>
 </select>
 
 <insert id="insert">
@@ -73,13 +48,4 @@ UPDATE tbl_news SET title=#{title}, content=#{content}, updatedate = now()
 WHERE bno = #{bno}
 </update>
 
-<update id="updateHit">
-UPDATE tbl_news SET hit=hit+1 
-WHERE bno = #{bno}
-</update>
-
-<update id="updateReplyCnt">
-UPDATE tbl_news SET replyCnt = replyCnt + #{amount} 
-WHERE bno = #{bno}
-</update>
 </mapper>

@@ -16,6 +16,7 @@ public class CommonUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String str = sdf.format(new Date());	
 		return str.replace("-", File.separator);
+		
 	}
 	
 	/**
@@ -32,8 +33,6 @@ public class CommonUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return false;
-		
-	}
-	
+		return false;	
+	}	
 }

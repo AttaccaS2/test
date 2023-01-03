@@ -16,33 +16,21 @@
 					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}">
 						
 						<div class="form-group">
-							<label for="exampleTextInput1" class="col-sm-3 control-label">도서관명:</label>
+							<label for="exampleTextInput1" class="col-sm-3 control-label">Title:</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control input-sm" name="name" id="name"
-									placeholder="name" required="required">
+								<input type="text" class="form-control input-sm" name="title" id="title"
+									placeholder="Title" required="required">
 							</div>
 						</div>
-						
-						
 						<div class="form-group">
-							<label for="exampleTextInput1" class="col-sm-3 control-label">장서 수:</label>
+							<label for="textarea1" class="col-sm-3 control-label">Content:</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control input-sm" name="books" id="books"
-									placeholder="장서" required="required">
+								<textarea class="form-control input-sm" name="content" id="content"
+									placeholder="Your content..." required="required"></textarea>
 							</div>
 						</div>
-						
 						<div class="form-group">
-							<label for="exampleTextInput1" class="col-sm-3 control-label">사서 수</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control input-sm" name="man" id="man"
-									placeholder="사서" required="required">
-							</div>
-						</div>
-						
-						
-						<div class="form-group">
-							<label for="exampleTextInput1" class="col-sm-3 control-label">작성자:</label>
+							<label for="exampleTextInput1" class="col-sm-3 control-label">Writer:</label>
 							<div class="col-sm-9">
 								<input type="text" class="form-control input-sm" name="writer" id="writer" readonly="readonly"
 									placeholder="Writer" required="required" value="<sec:authentication property="principal.username"/>">
@@ -201,7 +189,7 @@ $(document).ready(function(){
 		}
 		
 		$.ajax({
-			url:"/admin/uploadAjaxAction",
+			url:"/uploadAjaxAction",
 			processData:false,
 			contentType:false,
 			data:formData,

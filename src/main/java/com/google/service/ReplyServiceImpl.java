@@ -1,5 +1,7 @@
 package com.google.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +10,7 @@ import com.google.domain.Criteria;
 import com.google.domain.ReplyPageDTO;
 import com.google.domain.ReplyVO;
 import com.google.mapper.BoardMapper;
+import com.google.mapper.LibMapper;
 import com.google.mapper.ReplyMapper;
 
 import lombok.Setter;
@@ -23,10 +26,22 @@ public class ReplyServiceImpl implements ReplyService {
 	@Setter(onMethod_ = {@Autowired})
 	private BoardMapper boardmapper;
 	
+	@Setter(onMethod_ = {@Autowired})
+	private LibMapper libmapper;
+	
 	@Transactional
-	@Override
+	@Override 
 	public int insert(ReplyVO vo) {
-		boardmapper.updateReplyCnt(vo.getBno(), 1);
+		System.out.println("[DEG1]"+vo);
+		System.out.println("[DEG2]"+vo.getTableID());
+		
+		if(vo.getTableID().equals("board")) {
+			libmapper.updateReplyCnt((int) vo.getBno(), 1);		
+			System.out.println("[vo.getBno()]"+vo.getBno());
+		} else {
+			boardmapper.updateReplyCnt(vo.getBno(), 1);	
+			System.out.println("[DEG5]");
+		}
 		return mapper.insert(vo);
 	}
 
@@ -39,7 +54,12 @@ public class ReplyServiceImpl implements ReplyService {
 	@Override
 	public int delete(Long rno) {
 		ReplyVO vo = mapper.read(rno); //rno 가져와
-		boardmapper.updateReplyCnt(vo.getBno(), -1);
+		if(vo.getTableID().equals("board")) {
+			System.out.println("[DEG6]");
+			libmapper.updateReplyCnt((int) vo.getBno(), -1);	
+		} else {
+			boardmapper.updateReplyCnt(vo.getBno(), -1);	
+		}
 		return mapper.delete(rno);
 	}
 
@@ -64,4 +84,9 @@ public class ReplyServiceImpl implements ReplyService {
 				,mapper.getListWithPaging2(cri, bno, tableID));
 	}
 
+	@Override
+	public ArrayList<ReplyVO> readById(String replyer) {
+		
+		return mapper.readById(replyer);
+	}
 }

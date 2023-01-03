@@ -28,4 +28,22 @@ ON (m.userid = ma.userid)
 WHERE m.userid = #{userid};
 </select>
 
+<insert id="insertMember">
+INSERT INTO tbl_member (userid, userpw, username) VALUES (#{userid}, #{userpw}, #{userName})
+</insert>
+
+<delete id="delete">
+DELETE FROM tbl_member WHERE userid = #{userid}
+</delete>
+
+<update id="update">
+UPDATE tbl_member SET userName = #{userName} 
+WHERE userid = #{userid}
+</update>
+
+<select id="readByInt" resultType="int">
+SELECT count(*) FROM tbl_member
+WHERE userid = #{userid};
+</select>
+
 </mapper>

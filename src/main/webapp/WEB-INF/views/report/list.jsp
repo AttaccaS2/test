@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
     
 <%@ include file="../includes/header.jsp" %>    
-    
+   
 <div class="wrap"> 
 	<div class="row">
 			<div class="col-md-12">
@@ -46,19 +46,6 @@
 							</table>
 					</div>
 		<div class="row">			
-			<div class="col-md-6 pagination">
-			<form action="" class="form-inline">
-				<select name="type" class="form-control" style="min-width:10px">
-					<option value="">선택
-					<option value="T">제목
-					<option value="C">내용
-					<option value="W">작성자
-					<option value="TC">제목+내용					
-				</select>
-				<input type="text" name="keyword" class="form-control">
-				<button class="btn btn-default">검색</button>
-			</form>
-			</div>		
 			<div class="col-md-6">
 					<!-- 페이지 -->
 					<nav style="text-align:right;">

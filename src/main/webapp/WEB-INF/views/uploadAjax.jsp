@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="/admin/resources/libs/bower/jquery/dist/jquery.js"></script>
+<script src="/resources/libs/bower/jquery/dist/jquery.js"></script>
 </head>
 <body>
 <h1>Upload with Ajax</h1>

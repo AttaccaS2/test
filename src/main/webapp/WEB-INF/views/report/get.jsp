@@ -16,6 +16,7 @@
 					<hr class="widget-separator">
 					<div class="widget-body">
 						<form method="post" class="form-horizontal" action="">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}">
 						<input type="hidden" name="bno" value="${report.bno }"/>
 
 							<div class="form-group">

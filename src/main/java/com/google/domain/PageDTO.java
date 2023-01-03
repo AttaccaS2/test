@@ -16,7 +16,11 @@ public class PageDTO {
 	private int total;//전체글수
 	private Criteria cri;//페이징
 
-
+	/*
+	 * private int realStart; private int realEnd;
+	 */
+	
+	
 	public PageDTO(Criteria cri) {
 		super();
 		this.cri = cri;
@@ -40,6 +44,9 @@ public class PageDTO {
 		this.next = this.endPage <realEnd;
 	}
 
-
+	public int getLastPage() {
+		return (int)(Math.ceil((total*1.0) /cri.getAmount()));
+		
+	}
 
 }

@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>   
-<%-- <sec:authorize access="isAnonymous()">
-<script>
-location.href="/customLogin";
-</script>
-</sec:authorize>
-					 --%>	 
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,29 +10,24 @@ location.href="/customLogin";
 	<meta name="description" content="Admin, Dashboard, Bootstrap" />
 	<link rel="shortcut icon" sizes="196x196" href="/resources/assets/images/logo.png">
 	<title>비공식 작은 도서관 협의회</title>
-	
 	<link rel="stylesheet" href="/resources/libs/bower/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/resources/libs/bower/material-design-iconic-font/dist/css/material-design-iconic-font.css">
-	<!-- build:css /admin/resources/assets/css/app.min.css -->
 	<link rel="stylesheet" href="/resources/libs/bower/animate.css/animate.min.css">
 	<link rel="stylesheet" href="/resources/libs/bower/fullcalendar/dist/fullcalendar.min.css">
 	<link rel="stylesheet" href="/resources/libs/bower/perfect-scrollbar/css/perfect-scrollbar.css">
 	<link rel="stylesheet" href="/resources/assets/css/bootstrap.css">
 	<link rel="stylesheet" href="/resources/assets/css/core.css">
 	<link rel="stylesheet" href="/resources/assets/css/app.css">
-	<!-- endbuild -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800,900,300">
 	<script src="/resources/libs/bower/breakpoints.js/dist/breakpoints.min.js"></script>
-	<!-- build:js /admin/resources/assets/js/core.min.js -->
 	<script src="/resources/libs/bower/jquery/dist/jquery.js"></script>
+<!-- 	<script src="/resources/libs/bower/jquery/dist/jquery.js"></script> -->
 	<script src="/resources/libs/bower/jquery-ui/jquery-ui.min.js"></script>
 	<script src="/resources/libs/bower/jQuery-Storage-API/jquery.storageapi.min.js"></script>
 	<script src="/resources/libs/bower/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
 	<script src="/resources/libs/bower/jquery-slimscroll/jquery.slimscroll.js"></script>
 	<script src="/resources/libs/bower/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
 	<script src="/resources/libs/bower/PACE/pace.min.js"></script>
-	<!-- endbuild -->
-
 	<script>
 		Breakpoints();
 	</script>
@@ -69,7 +58,6 @@ location.href="/customLogin";
           </a>
         </li>
         <li>
-          <h5 class="page-title hidden-menubar-top">Dashboard</h5>
         </li>
       </ul>
 
@@ -95,7 +83,7 @@ location.href="/customLogin";
       <div class="media-left">
       	<sec:authorize access="isAuthenticated()">
         <div class="avatar avatar-md avatar-circle">
-          <a href="javascript:void(0)"><img class="img-responsive" src="/resources/assets/images/221.jpg" alt="avatar"/></a>
+          <a href="javascript:void(0)"><img class="img-responsive" src="/resources/assets/images/tree-icon.jpg" alt="avatar"/></a>
         </div>
         </sec:authorize>
         
@@ -107,8 +95,7 @@ location.href="/customLogin";
       
       <div class="media-body">
         <div class="foldable">
-          <h5><a href="javascript:void(0)" class="username">John Doe</a></h5>
-          <ul>
+            <ul>
             <li class="dropdown">
               <a href="javascript:void(0)" class="dropdown-toggle usertitle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <small>Web Developer</small>
@@ -116,23 +103,28 @@ location.href="/customLogin";
               </a>
               <ul class="dropdown-menu animated flipInY">
                 <li>
-                  <a class="text-color" href="/index.html">
+                  <a class="text-color" href="/">
                     <span class="m-r-xs"><i class="fa fa-home"></i></span>
                     <span>Home</span>
                   </a>
                 </li>
                 <li>
-                  <a class="text-color" href="profile.html">
+                  <a class="text-color" href="/member/profile">
                     <span class="m-r-xs"><i class="fa fa-user"></i></span>
-                    <span>Profile</span>
+                    <span>프로필</span>
                   </a>
                 </li>
                 <li>
-                  <a class="text-color" href="settings.html">
+                  <a class="text-color" href="javascript:void(0);$('#signout').submit();">
                     <span class="m-r-xs"><i class="fa fa-gear"></i></span>
-                    <span>Settings</span>
+                    <span>탈퇴</span>
                   </a>
                 </li>
+                
+                <form id="signout" method="post" action="/member/signout">
+				<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
+				</form>             
+				
                 <li role="separator" class="divider"></li>
                 <li>
                   <a class="text-color" href="javascript:void(0);$('#logout').submit();">
@@ -161,8 +153,8 @@ location.href="/customLogin";
             <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>
           </a>
           <ul class="submenu">
-            <li><a href="/board/list"><span class="menu-text">전국</span></a></li>
-            <li><a href="/news/list"><span class="menu-text">공지사항</span></a></li>            
+            <li><a href="/lib/list"><span class="menu-text">전국</span></a></li>
+            <li><a href="/board/list"><span class="menu-text">공지사항</span></a></li>            
             </ul>
         </li>
         

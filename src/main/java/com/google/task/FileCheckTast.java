@@ -29,8 +29,7 @@ public class FileCheckTast {
 	public void checkFiles() throws Exception {
 		log.warn("File check Task run....");
 			
-		List<BoardAttachVO> fileList = attachMapper.getOldFiles();
-		
+		List<BoardAttachVO> fileList = attachMapper.getOldFiles();	
 		List<Path> fileListPaths = fileList.stream()
 				.map(vo -> Paths.get("d:/upload", vo.getUploadPath(), vo.getUuid() + "_" + vo.getFileName()))
 				.collect(Collectors.toList());
@@ -43,10 +42,24 @@ public class FileCheckTast {
 		
 		File[] removeFiles = targetDir.listFiles(file -> fileListPaths.contains(file.toPath()) == false);
 		
-		for(File file : removeFiles) {
-			file.delete();
+		
+		/*
+		 * if(removeFiles==null||removeFiles.equals("")) { return; } else {
+		 * 
+		 * for(File file : removeFiles) { file.delete(); return;}
+		 * 
+		 * }
+		 * 
+		 * 무한반복 log.warn("File check Task run...."); 
+		 */
+		 
+
+			
+		for(File file : removeFiles) { 
+			file.delete(); 
 		}
-				
+			 
+
  	}
 
 	private String getFolderYesterDay() {
